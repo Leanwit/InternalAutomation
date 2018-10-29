@@ -1,0 +1,102 @@
+Nls integrations estimation;NLS Integrations;Development;Tech Leading
+Google Feeds review Json + implementations deepling;Google Feeds;Development;Tech Leading
+UX Weekly;Time Reporting;Time Reporting;Other
+RV: Descripciones con error;Support and Internal Operations;Support Octubre;Execution
+Nls daily;Non-linear Scheduling Platform;Design & Development support;Other
+Code Review - PS-105;NLS Integrations;Development;Review
+Grooming Google Feeds - tickets;Google Feeds;Development;Tech Leading
+Support Occtubre - unable to connect to WOMM Database;Support and Internal Operations;Support Octubre;Execution
+Review nls integration sprint - review velocity;NLS Integrations;Development;Tech Leading
+Review support mails - open tickets supports;Support and Internal Operations;Support Octubre;Execution
+google feeds daily;Google Feeds;Development;Other
+Time Reporting;Time Reporting;Time Reporting;Execution
+Check if can create an applause with cell phone;Time Reporting;Time Reporting;Other
+Daily Fox sprint;Fox Online - Scrum Management;Daily meetings;Execution
+Review NLS Integrations - Current Kanban Board - Grooming;NLS Integrations;Development;Management
+Time reporting;Time Reporting;Time Reporting;Execution
+Kick of Eze in PS;NLS Integrations;Development;Tech Leading
+Review Fox BDE status;Fox Online - Technical Design and Analysis;Technical Leading;Execution
+NLS integration - Roles y Usuarios Analysis;NLS Integrations;Development;Tech Leading
+NLS Integrations review implementations;NLS Integrations;Development;Analysis
+RRHH - Capacitaciones;Time Reporting;Time Reporting;Other
+Daily Google Feeds;Google Feeds;Development;Other
+Daily NLS;Non-linear Scheduling Platform;Design & Development support;Other
+Review saveVersion api - WOMM;Support and Internal Operations;Support Octubre;Execution
+Review users implementations in PS - NLS Integrations;NLS Integrations;Development;Analysis
+Daily Fox;Fox Ingeniería - Scrum Management;Daily meetings;Execution
+Develop department - Okta request account and estimate in tickets;Development;Development;Tech Leading
+Review test environment NLS;Non-linear Scheduling Platform;Design & Development support;Review
+Apple Feeds analysis;Time Reporting;Time Reporting;Other
+Review sprint BDE - Task and story;Fox Online - Technical Design and Analysis;Technical Leading;Management
+Review get implementations in PGA;Time Reporting;Time Reporting;Other
+POC - Ausencias;Time Reporting;Time Reporting;Other
+Review version in stage bde;Fox Online - Technical Design and Analysis;Technical Leading;Tech Leading
+Review support mails;Support and Internal Operations;Support Octubre;Execution
+siradig;Time Reporting;Time Reporting;Other
+Review mails - current task deparment;Development;Development;Analysis
+NLS integration review _ PS-71;NLS Integrations;Development;Review
+Review bde faltantes tvvod;Fox Online - Technical Design and Analysis;Technical Leading;Tech Leading
+Google feeds analysis;Google Feeds;Development;Analysis
+Review current support;Support and Internal Operations;Support Octubre;Execution
+Execution NLS-432;Non-linear Scheduling Platform;Design & Development support;Execution
+Review publish nls implementations;NLS Integrations;Development;Analysis
+Support Report asset missing poster in BDE;Fox Online - Technical Design and Analysis;Technical Leading;Tech Leading
+Support PS review if still problem happen;Fox Ingeniería - Technical Design and Analysis;Technical Leading;Tech Leading
+Daily nls + review UI;Non-linear Scheduling Platform;Design & Development support;Other
+Apple feeds review;Time Reporting;Time Reporting;Review
+Review answers google feeds;Google Feeds;Development;Analysis
+Review apple feeds & analisys ratings;Time Reporting;Time Reporting;Analysis
+Review Ingest Issues - Fox-QP;Fox Online - Technical Design and Analysis;Technical Leading;Other
+Development task - review;Development;Development;Tech Leading
+RRHH Poc Ausencias;Time Reporting;Time Reporting;Other
+Support - Transform string into xml director;Support and Internal Operations;Support Octubre;Execution
+Meeting Keywords episodes / show NLS;NLS Integrations;Development;Other
+One on One Harold;Development;One on One;Execution
+One on One Mat;Development;One on One;Execution
+Development task;Development;Development;Tech Leading
+Review incognitas generales;Google Feeds;Development;Review
+Review gitlab ci;Development;One on One;Tech Leading
+NLS daily;NLS Integrations Investment;Daily;Execution
+Review Okta in PS;NLS Integrations;Development;Review
+Code review ODM-342;NLS Integrations;Development;Review
+Review google feeds and write for pending info;Google Feeds;Development;Review
+Review links training capacitaciones;Development;One on One;Tech Leading
+BDE Support issue;Fox Online - Technical Design and Analysis;Technical Leading;Tech Leading
+Google Feeds review analisys;Google Feeds;Development;Review
+weekly online;Fox Online - Scrum Management;Weekly meetings;Execution
+Review PS-81;NLS Integrations;Development;Review
+dev tech meeting;Development;Development Meeting;Execution
+Review development task minors;Development;Development;Tech Leading
+Review appi account group for Nls integrations;NLS Integrations;Development;Tech Leading
+Daily Fox Ingeniera;Fox Ingeniería - Scrum Management;Daily meetings;Execution
+Reporting and create task internal;Time Reporting;Time Reporting;Execution
+One on One with Khalil;Development;One on One;Execution
+Review current development task;Development;Development;Tech Leading
+Google feeds daily;Google Feeds;Development;Other
+Review export report NLS;Non-linear Scheduling Platform;Design & Development support;Review
+Review BDE implementations API to WEB;Broadcast Data Extend;Development;Review
+Error trying to Map Audio Channels;Support and Internal Operations;Support Octubre;Execution
+Metrics;Development;Development;Execution
+Revien nls integrations sorts of housenumbers by featured;NLS Integrations;Development;Tech Leading
+Code Review Ps-81: Status and comments update;NLS Integrations;Development;Review
+AF-23 review;Time Reporting;Time Reporting;Review
+PS-71 Review;NLS Integrations;Development;Review
+NLS Integrations - Review sprint, next tickets and current status;NLS Integrations;Development;Tech Leading
+PS-73 Review;NLS Integrations;Development;Review
+Moviecity dates support;Support and Internal Operations;Support Octubre;Execution
+Implement directors multipline in xml orchestrator;Support and Internal Operations;Support Octubre;Execution
+OR-7;Support and Internal Operations;Support Octubre;Execution
+Review one on one finished;Development;One on One;Review
+Metrics docker;Development;Development;Execution
+Review NLS Api for  implement channel in  NLS integrations;NLS Integrations;Development;Review
+One on Ones - Action items & output notes;Development;One on One;Execution
+Support Octubre: Faltante de Program ID;Support and Internal Operations;Support Octubre;Execution
+review PS-73 Role implementation;NLS Integrations;Development;Review
+WOMM-460 development;WOMM;Development;Execution
+created Tickets in sprint BDE;Fox Online - Technical Design and Analysis;Technical Leading;Tech Leading
+Daily Google Feed;Google Feeds;Development;Other
+Review mails development;Development;Development;Tech Leading
+BDE API - Actions naming convention + validation images;Broadcast Data Extend;BDE API - Actions naming convention;Execution
+daily fox ingenieria;Fox Ingeniería - Scrum Management;Daily meetings;Execution
+review Ps-81: Status and comments update;NLS Integrations;Development;Review
+Support octubre review generos;Support and Internal Operations;Support Octubre;Execution
