@@ -10,3 +10,7 @@ bin/
 obj/
 
 appsettings\.dev\.json
+
+internal\.txt
+
+TimeEntries\.txt
