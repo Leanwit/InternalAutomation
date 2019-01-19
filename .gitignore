@@ -1,0 +1,10 @@
+
+\.idea/\.idea\.internal/\.idea/
+
+\.idea/\.idea\.internal/
+
+\.vscode/
+
+bin/
+
+obj/

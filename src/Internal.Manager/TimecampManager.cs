@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using Util;
 using Newtonsoft.Json;
 using Microsoft.Extensions.Configuration;
+using Manager.Util;
 
 namespace Manager
 {
@@ -27,13 +28,25 @@ namespace Manager
 
         public async System.Threading.Tasks.Task<List<TimecampItem>> GetInfoAsync()
         {
-            
+
             string baseUrl = $"https://www.timecamp.com/third_party/api/entries/format/json/api_token/{_token}/from/{this.From}/to/{this.To}/";
             using (HttpClient client = new HttpClient())
             using (HttpResponseMessage res = await client.GetAsync(baseUrl))
             using (HttpContent content = res.Content)
             {
-                string data = await content.ReadAsStringAsync();
+                string data = string.Empty;
+                do
+                {
+                    try
+                    {
+                        data = await content.ReadAsStringAsync();
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                } while (data.Equals(string.Empty));
+
                 if (data != null)
                 {
                     List<TimecampItemApi> timecampItemsApi = JsonConvert.DeserializeObject<List<TimecampItemApi>>(data);
@@ -50,12 +63,7 @@ namespace Manager
             return new List<TimecampItem>();
         }
 
-        public static string GetTicketByDescription(string text)
-        {
-            Regex regex = new Regex("((ODM|PS|BDE|WOMM|NLS|AF))-([0-9]*)");
-            var match = regex.Match(text);
-            return match.Value;
-        }
+        
         private List<TimecampItem> MapToTimeCampItem(List<TimecampItemApi> timecampItemsApi)
         {
             List<TimecampItem> list = new List<TimecampItem>();
@@ -70,7 +78,7 @@ namespace Manager
                     Project = item.Task?.Parent?.Parent?.Name,
                     Task = item.Task?.Parent?.Name,
                     Time = TimeHelper.TransformSecondsToInternalTime(item.Duration),
-                    Ticket = GetTicketByDescription(item.Description)
+                    Ticket = Helper.GetTicketByDescription(item.Description)
                 });
             }
 

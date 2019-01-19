@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using Manager.Util;
 using Model;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -12,21 +13,27 @@ namespace Automation
 {
     public class InternalAutomation : Base
     {
-        public void Init(string Email, string Password, List<TimecampItem> timecampItems)
+        public void Init(string Email, string Password, List<TimecampItem> timecampItems, string url)
         {
+            if (timecampItems == null && timecampItems.Count == 0)
+            {
+                return;
+            }
+
+
             using (var driver = new ChromeDriver(Path.GetDirectoryName(this.ChromeDriverFolder), this.ChromeOptions))
             {
                 SeleniumHelper selenium = new SeleniumHelper(driver);
-                driver.Navigate().GoToUrl("http://internal.around.com.ar");
+                driver.Navigate().GoToUrl(url);
                 driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(200);
-                selenium.FindElement(By.XPath("//*[@data-original-title='Log in using your Google account']"), 50).Click();
+                selenium.FindElement(By.XPath("//*[@data-original-title='Log in using your Google account']"), 50)
+                    .Click();
                 selenium.GoogleLogin(Email, Password);
 
                 Thread.Sleep(4000);
 
-                //FindElement (driver, By.XPath ("//a[@name='getDashboardTaskId']"), 40).Click ();
-
-                IWebElement Element = selenium.FindElement(By.XPath("//table[@class='table table-bordered table-hover']"), 100);
+                IWebElement Element =
+                    selenium.FindElement(By.XPath("//table[@class='table table-bordered table-hover']"), 100);
                 IWebElement Table = Element.FindElement(By.TagName("tbody"));
                 IJavaScriptExecutor js = driver as IJavaScriptExecutor;
 
@@ -45,17 +52,21 @@ namespace Automation
                         {
                             newProject.Project = td.Text;
                         }
+
                         if (elementCount == 2)
                         {
                             newProject.Task = td.Text;
                         }
+
                         if (elementCount == 7)
                         {
                             newProject.Button = td.FindElements(By.TagName("a"))[1];
                             newProject.IdElement = td.FindElements(By.TagName("a"))[1].GetAttribute("data-id");
                         }
+
                         elementCount++;
                     }
+
                     listProject.Add(newProject);
                     js.ExecuteScript("arguments[0].style='background-color: gray;'", tr);
                 }
@@ -79,16 +90,17 @@ namespace Automation
                         });
                     }
                 }
+
                 TimecampItem history = new TimecampItem();
                 //Complete timecamp without data
                 foreach (TimecampItem entry in timecampItems)
                 {
-
                     if (entry.Project == null && histories.Exists(h => h.Comment.Equals(entry.Comment)))
                     {
-                        history = histories.Find(h => h.Comment.Equals(entry.Comment));
+                        history = histories.FindLast(h => h.Comment.Equals(entry.Comment));
                         Console.WriteLine($"Exist and comment '{entry.Comment}'");
-                        Console.WriteLine($"{history.Project} - {history.Task} - {history.Activity} - {history.Comment}");
+                        Console.WriteLine(
+                            $"{history.Project} - {history.Task} - {history.Activity} - {history.Comment}");
                         Console.WriteLine($"0-No | 1-Yes");
                         string option = Console.ReadLine();
                         if (option.Equals("1"))
@@ -107,24 +119,23 @@ namespace Automation
                         Console.Clear();
                     }
 
+                    entry.Activity = InternalHelper.GetPredictedActivityValue(entry.Comment);
+
                     if (entry.Activity == null)
                     {
-                        entry.Activity = GetActivityValue(entry);
+                        entry.Activity = InternalHelper.GetActivityValue(entry);
                         Console.Clear();
                     }
 
 
                     if (!(histories.Exists(h => h.Comment.Equals(entry.Comment)) &&
-                       histories.Exists(h => h.Activity.Equals(entry.Activity)) &&
-                       histories.Exists(h => h.Project.Equals(entry.Project)) &&
-                       histories.Exists(h => h.Task.Equals(entry.Task))))
+                          histories.Exists(h => h.Activity.Equals(entry.Activity)) &&
+                          histories.Exists(h => h.Project.Equals(entry.Project)) &&
+                          histories.Exists(h => h.Task.Equals(entry.Task))))
                     {
                         using (StreamWriter outputFile = File.AppendText("TimeEntries.txt"))
                         {
-
                             outputFile.WriteLine($"{entry.Comment};{entry.Project};{entry.Task};{entry.Activity}");
-
-
                         }
 
                         histories.Add(new TimecampItem()
@@ -134,25 +145,27 @@ namespace Automation
                             Activity = entry.Activity,
                             Comment = entry.Comment
                         });
-
                     }
-
                 }
 
                 foreach (TimecampItem entry in timecampItems)
                 {
-                    WebProject test = listProject.Find(l => l.Project.ToLower().Equals(entry.Project.ToLower()) && l.Task.ToLower().Equals(entry.Task.ToLower()));
+                    WebProject test = listProject.Find(l =>
+                        l.Project.ToLower().Equals(entry.Project.ToLower()) &&
+                        l.Task.ToLower().Equals(entry.Task.ToLower()));
+
                     if (test != null)
                     {
                         DateTime myDate = DateTime.ParseExact(entry.Date, "yyyy-MM-dd",
-                        System.Globalization.CultureInfo.InvariantCulture);
+                            System.Globalization.CultureInfo.InvariantCulture);
                         //string timeDaily = (double.Parse(Time.GetInternalTime(entry.Time).Replace(".", ",")) / 2).ToString().Replace(",", ".");
                         string timeDaily = TimeHelper.GetInternalTime(entry.Time);
 
                         selenium.FindElement(By.XPath("//a[@data-id='" + test.IdElement + "']"), 50).Click();
                         Thread.Sleep(5000);
                         selenium.FindElement(By.XPath("//input[@name='WorkedHourDate']"), 50).Clear();
-                        selenium.FindElement(By.XPath("//input[@name='WorkedHourDate']"), 50).SendKeys(myDate.ToString("dd/MM/yyyy"));
+                        selenium.FindElement(By.XPath("//input[@name='WorkedHourDate']"), 50)
+                            .SendKeys(myDate.ToString("dd/MM/yyyy"));
                         selenium.FindElement(By.XPath("//input[@name='WorkedHourDate']"), 50).SendKeys(Keys.Enter);
 
                         selenium.FindElement(By.XPath("//input[@name='Amount']"), 50).Clear();
@@ -161,24 +174,29 @@ namespace Automation
 
                         if (!string.IsNullOrWhiteSpace(entry.Ticket))
                         {
-                            selenium.FindElement(By.XPath("//span[@class='select2-selection select2-selection--single']"), 50).Click();
-                            IWebElement TicketSelect = selenium.FindElement(By.XPath("//input[@class='select2-search__field']"), 50);
+                            selenium.FindElement(
+                                By.XPath("//span[@class='select2-selection select2-selection--single']"), 50).Click();
+                            IWebElement TicketSelect =
+                                selenium.FindElement(By.XPath("//input[@class='select2-search__field']"), 50);
                             TicketSelect.SendKeys(entry.Ticket);
                             Thread.Sleep(10000);
                             TicketSelect.SendKeys(Keys.Enter);
                         }
 
-                        IWebElement ActivitySelect = selenium.FindElement(By.XPath("//*[@id='addDashboardHoursInputActivities']"), 50);
+                        IWebElement ActivitySelect =
+                            selenium.FindElement(By.XPath("//*[@id='addDashboardHoursInputActivities']"), 50);
                         ActivitySelect.Click();
-                        ActivitySelect.FindElement(By.XPath(".//option[contains(text(),'" + entry.Activity + "')]")).Click();
+                        ActivitySelect.FindElement(By.XPath(".//option[contains(text(),'" + entry.Activity + "')]"))
+                            .Click();
                         selenium.FindElement(By.XPath("//button[@value='submit']"), 50).Click();
                     }
                     else
                     {
-                        Console.WriteLine(string.Format("Project {0} doesn't exist - Task {1} - Activity {2} - Date {3}", entry.Project.ToLower(), entry.Task, entry.Activity, entry.Date));
+                        Console.WriteLine(string.Format(
+                            "Project {0} doesn't exist - Task {1} - Activity {2} - Date {3}", entry.Project.ToLower(),
+                            entry.Task, entry.Activity, entry.Date));
                     }
                 }
-
             }
         }
 
@@ -195,6 +213,7 @@ namespace Automation
                 options.Add(count, project);
                 count++;
             }
+
             string option = Console.ReadLine();
             while (true)
             {
@@ -212,6 +231,7 @@ namespace Automation
                     Console.WriteLine("Error option");
                     continue;
                 }
+
                 option = Console.ReadLine();
             }
         }
@@ -228,6 +248,7 @@ namespace Automation
                 options.Add(count, project.Task);
                 count++;
             }
+
             string option = Console.ReadLine();
             while (true)
             {
@@ -245,40 +266,8 @@ namespace Automation
                     Console.WriteLine("Error option");
                     continue;
                 }
+
                 option = Console.ReadLine();
-            }
-        }
-
-        public static string GetActivityValue(TimecampItem entry)
-        {
-            Console.WriteLine($"Complete Activity for '{entry.Comment}'");
-
-            Console.WriteLine("1. Analysis");
-            Console.WriteLine("2. Execution");
-            Console.WriteLine("3. Management");
-            Console.WriteLine("4. Review");
-            Console.WriteLine("5. Rework");
-            Console.WriteLine("6. Tech Leading");
-            Console.WriteLine("7. Testing");
-            Console.WriteLine("8. Other");
-
-            string option = Console.ReadLine();
-
-            while (true)
-            {
-                switch (option)
-                {
-                    case "1": return "Analysis";
-                    case "2": return "Execution";
-                    case "3": return "Management";
-                    case "4": return "Review";
-                    case "5": return "Rework";
-                    case "6": return "Tech Leading";
-                    case "7": return "Testing";
-                    case "8": return "Other";
-                    default:
-                        option = Console.ReadLine(); break;
-                }
             }
         }
     }
