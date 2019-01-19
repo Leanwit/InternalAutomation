@@ -7,29 +7,27 @@ namespace Manager
 {
     public class EntriesTextManager
     {
-        public string[] entries;
-        public List<TimecampItem> timecampItems { get; private set; }
+        public List<InternalItem> InternalItem { get; private set; }
 
         public EntriesTextManager()
         {
-            this.timecampItems = new List<TimecampItem>();
+            this.InternalItem = new List<InternalItem>();
             string text = System.IO.File.ReadAllText(@"internal.txt");
-            string[] entries = text.Split("\r\n");
+            string[] lines = text.Split("\r\n");
             string[] task;
-            foreach (var x in entries)
+            foreach (var line in lines)
             {
-                task = x.Split("   ");
-                timecampItems.Add(this.EntriesToTimecampItem(task));
+                InternalItem.Add(this.EntriesToInternalItem(line.Split("   ")));
             }
         }
 
 
-        public TimecampItem EntriesToTimecampItem(string[] task)
+        public InternalItem EntriesToInternalItem(string[] task)
         {
             string comment = task[4].Trim();
             string hour = task[3].Replace(",", ".");
             string date = task[0];
-            var items = new TimecampItem();
+            var items = new InternalItem();
             items.Comment = comment;
             items.Date = date;
             items.Time = hour;

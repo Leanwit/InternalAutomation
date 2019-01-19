@@ -1,6 +1,6 @@
 namespace Model
 {
-    public class TimecampItem
+    public class InternalItem
     {
         public string Date { get; set; }
         public string Activity { get; set; }

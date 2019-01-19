@@ -9,12 +9,12 @@ namespace Manager.Util
     {
         public static string GetTicketByDescription(string text)
         {
-            Regex regex = new Regex("((ODM|PS|BDE|WOMM|NLS|AF|FVW))-([0-9]*)");
+            Regex regex = new Regex("((ODM|PS|BDE|WOMM|NLS|AF|FVW|AWPOC|UX))-([0-9]*)");
             var match = regex.Match(text);
             return match.Value;
         }
 
-        public static string GetActivityValue(TimecampItem entry)
+        public static string GetActivityValue(InternalItem entry)
         {
             Console.WriteLine($"Complete Activity for '{entry.Comment}'");
 
@@ -33,14 +33,14 @@ namespace Manager.Util
             {
                 switch (option)
                 {
-                    case "1": return "Analysis";
-                    case "2": return "Execution";
-                    case "3": return "Management";
-                    case "4": return "Review";
-                    case "5": return "Rework";
-                    case "6": return "Tech Leading";
-                    case "7": return "Testing";
-                    case "8": return "Other";
+                    case "1": return Activity.Analysis;
+                    case "2": return Activity.Execution;
+                    case "3": return Activity.Management;
+                    case "4": return Activity.Review;
+                    case "5": return Activity.Rework;
+                    case "6": return Activity.TechLeading;
+                    case "7": return Activity.Testing;
+                    case "8": return Activity.Other;
                     default:
                         option = Console.ReadLine();
                         break;

@@ -26,7 +26,7 @@ namespace Manager
             _token = token;
         }
 
-        public async System.Threading.Tasks.Task<List<TimecampItem>> GetInfoAsync()
+        public async System.Threading.Tasks.Task<List<InternalItem>> GetInfoAsync()
         {
 
             string baseUrl = $"https://www.timecamp.com/third_party/api/entries/format/json/api_token/{_token}/from/{this.From}/to/{this.To}/";
@@ -60,17 +60,17 @@ namespace Manager
                 }
             }
 
-            return new List<TimecampItem>();
+            return new List<InternalItem>();
         }
 
         
-        private List<TimecampItem> MapToTimeCampItem(List<TimecampItemApi> timecampItemsApi)
+        private List<InternalItem> MapToTimeCampItem(List<TimecampItemApi> timecampItemsApi)
         {
-            List<TimecampItem> list = new List<TimecampItem>();
+            List<InternalItem> list = new List<InternalItem>();
 
             foreach (var item in timecampItemsApi)
             {
-                list.Add(new TimecampItem
+                list.Add(new InternalItem
                 {
                     Date = item.Date,
                     Activity = item.Task?.Name,
@@ -78,7 +78,7 @@ namespace Manager
                     Project = item.Task?.Parent?.Parent?.Name,
                     Task = item.Task?.Parent?.Name,
                     Time = TimeHelper.TransformSecondsToInternalTime(item.Duration),
-                    Ticket = Helper.GetTicketByDescription(item.Description)
+                    Ticket = InternalHelper.GetTicketByDescription(item.Description)
                 });
             }
 

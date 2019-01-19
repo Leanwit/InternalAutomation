@@ -29,20 +29,21 @@ public class Program
         Console.WriteLine(Config.GetSection("Credentials").GetSection("Timecamp")["Password"]);
 
         var methodTimeEntry = Config.GetSection("MethodTimeEntry");
-        List<TimecampItem> timecampItems = new List<TimecampItem>();
+        List<InternalItem> intenalItems = new List<InternalItem>();
         if (methodTimeEntry["Timecamp"].Equals("true"))
         {
-            timecampItems =
+            intenalItems =
                 new TimecampManager("2019-01-18", "2019-01-18", GetTimecampConfig("Token")).GetInfoAsync().Result;
         }
 
         if (methodTimeEntry["Text"].Equals("true"))
         {
             var entriesTextManager = new EntriesTextManager();
-            timecampItems = entriesTextManager.timecampItems;
+            intenalItems = entriesTextManager.InternalItem;
         }
 
-        new InternalAutomation().Init(GetInternalConfig("Email"), GetInternalConfig("Password"), timecampItems, GetInternalConfig("Url"));
+        new InternalAutomation().Init(GetInternalConfig("Email"), GetInternalConfig("Password"), intenalItems,
+            GetInternalConfig("Url"));
     }
 
     private static string GetInternalConfig(string key)

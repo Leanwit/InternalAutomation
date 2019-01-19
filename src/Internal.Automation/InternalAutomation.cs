@@ -13,9 +13,9 @@ namespace Automation
 {
     public class InternalAutomation : Base
     {
-        public void Init(string Email, string Password, List<TimecampItem> timecampItems, string url)
+        public void Init(string Email, string Password, List<InternalItem> internalItems, string url)
         {
-            if (timecampItems == null && timecampItems.Count == 0)
+            if (internalItems == null && internalItems.Count == 0)
             {
                 return;
             }
@@ -74,14 +74,14 @@ namespace Automation
 
                 listProject = listProject.OrderBy(lp => lp.Project).ToList();
 
-                List<TimecampItem> histories = new List<TimecampItem>();
+                List<InternalItem> histories = new List<InternalItem>();
                 using (StreamReader sr = new StreamReader("TimeEntries.txt", false))
                 {
                     string line;
                     while ((line = sr.ReadLine()) != null)
                     {
                         string[] words = line.Split(';');
-                        histories.Add(new TimecampItem()
+                        histories.Add(new InternalItem()
                         {
                             Project = words[1],
                             Task = words[2],
@@ -91,9 +91,9 @@ namespace Automation
                     }
                 }
 
-                TimecampItem history = new TimecampItem();
-                //Complete timecamp without data
-                foreach (TimecampItem entry in timecampItems)
+                InternalItem history = new InternalItem();
+
+                foreach (InternalItem entry in internalItems)
                 {
                     if (entry.Project == null && histories.Exists(h => h.Comment.Equals(entry.Comment)))
                     {
@@ -138,7 +138,7 @@ namespace Automation
                             outputFile.WriteLine($"{entry.Comment};{entry.Project};{entry.Task};{entry.Activity}");
                         }
 
-                        histories.Add(new TimecampItem()
+                        histories.Add(new InternalItem()
                         {
                             Project = entry.Project,
                             Task = entry.Task,
@@ -148,7 +148,7 @@ namespace Automation
                     }
                 }
 
-                foreach (TimecampItem entry in timecampItems)
+                foreach (InternalItem entry in internalItems)
                 {
                     WebProject test = listProject.Find(l =>
                         l.Project.ToLower().Equals(entry.Project.ToLower()) &&
@@ -201,7 +201,7 @@ namespace Automation
         }
 
 
-        private static WebProject GetProjectValue(List<WebProject> newProject, TimecampItem entry)
+        private static WebProject GetProjectValue(List<WebProject> newProject, InternalItem entry)
         {
             WebProject projectValue;
             Console.WriteLine($"Complete Project for '{entry.Comment}'");
@@ -236,7 +236,7 @@ namespace Automation
             }
         }
 
-        private static string GetTaskValue(List<WebProject> newProject, TimecampItem entry)
+        private static string GetTaskValue(List<WebProject> newProject, InternalItem entry)
         {
             string taskValue;
             Console.WriteLine($"Complete Task for '{entry.Comment}'");
