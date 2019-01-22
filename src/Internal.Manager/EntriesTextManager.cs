@@ -12,13 +12,14 @@ namespace Manager
         public EntriesTextManager()
         {
             this.InternalItem = new List<InternalItem>();
-            string text = System.IO.File.ReadAllText(@"internal.txt");
-            string[] lines = text.Split("\r\n");
-            string[] task;
-            foreach (var line in lines)
+            string line;  
+
+            System.IO.StreamReader file =
+                new System.IO.StreamReader(@"internal.txt");
+            while ((line = file.ReadLine()) != null)
             {
-                InternalItem.Add(this.EntriesToInternalItem(line.Split("   ")));
-            }
+                InternalItem.Add(this.EntriesToInternalItem(line.Split("\t")));
+            }            
         }
 
 

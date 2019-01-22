@@ -119,9 +119,13 @@ namespace Automation
                         Console.Clear();
                     }
 
-                    entry.Activity = InternalHelper.GetPredictedActivityValue(entry.Comment);
 
-                    if (entry.Activity == null)
+                    if (entry.Activity == null || string.IsNullOrEmpty(entry.Activity))
+                    {
+                        entry.Activity = InternalHelper.GetPredictedActivityValue(entry.Comment);
+                    }
+
+                    if (entry.Activity == null || string.IsNullOrEmpty(entry.Activity))
                     {
                         entry.Activity = InternalHelper.GetActivityValue(entry);
                         Console.Clear();
