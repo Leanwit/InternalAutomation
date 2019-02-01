@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -98,12 +99,8 @@ namespace Automation
                     if (entry.Project == null && histories.Exists(h => h.Comment.Equals(entry.Comment)))
                     {
                         history = histories.FindLast(h => h.Comment.Equals(entry.Comment));
-                        Console.WriteLine($"Exist and comment '{entry.Comment}'");
-                        Console.WriteLine(
-                            $"{history.Project} - {history.Task} - {history.Activity} - {history.Comment}");
-                        Console.WriteLine($"0-No | 1-Yes");
-                        string option = Console.ReadLine();
-                        if (option.Equals("1"))
+
+                        if (listProject.Any(x => x.Project.Equals(history.Project)))
                         {
                             entry.Project = history.Project;
                             entry.Task = history.Task;
@@ -151,6 +148,8 @@ namespace Automation
                         });
                     }
                 }
+
+                internalItems = GroupByPerDay(internalItems);
 
                 foreach (InternalItem entry in internalItems)
                 {
@@ -204,6 +203,29 @@ namespace Automation
             }
         }
 
+        private List<InternalItem> GroupByPerDay(List<InternalItem> internalItems)
+        {
+            return internalItems.GroupBy(c => new
+                {
+                    c.Date,
+                    c.Project,
+                    c.Task,
+                    c.Comment,
+                    c.Activity,
+                    c.Ticket
+                })
+                .Select(gcs => new InternalItem()
+                {
+                    Date = gcs.Key.Date,
+                    Project = gcs.Key.Project,
+                    Activity = gcs.Key.Activity,
+                    Task = gcs.Key.Task,
+                    Comment = gcs.Key.Comment,
+                    Ticket = gcs.Key.Ticket,
+                    Time = gcs.Sum(g => double.Parse(g.Time)).ToString()
+                }).ToList();
+        }
+
 
         private static WebProject GetProjectValue(List<WebProject> newProject, InternalItem entry)
         {
@@ -233,6 +255,8 @@ namespace Automation
                 catch (System.Exception)
                 {
                     Console.WriteLine("Error option");
+                    option = Console.ReadLine();
+
                     continue;
                 }
 
