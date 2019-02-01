@@ -12,23 +12,24 @@ namespace Manager
         public EntriesTextManager()
         {
             this.InternalItem = new List<InternalItem>();
-            string line;  
+            string line;
 
             System.IO.StreamReader file =
                 new System.IO.StreamReader(@"internal.txt");
             while ((line = file.ReadLine()) != null)
             {
                 InternalItem.Add(this.EntriesToInternalItem(line.Split("\t")));
-            }            
+            }
         }
-
 
         public InternalItem EntriesToInternalItem(string[] task)
         {
             string comment = task[4].Trim();
+            string activity = task[5].Trim();
             string hour = task[3].Replace(",", ".");
             string date = task[0];
             var items = new InternalItem();
+            items.Activity = activity;
             items.Comment = comment;
             items.Date = date;
             items.Time = hour;
