@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -148,6 +149,8 @@ namespace Automation
                     }
                 }
 
+                internalItems = GroupByPerDay(internalItems);
+
                 foreach (InternalItem entry in internalItems)
                 {
                     WebProject test = listProject.Find(l =>
@@ -198,6 +201,29 @@ namespace Automation
                     }
                 }
             }
+        }
+
+        private List<InternalItem> GroupByPerDay(List<InternalItem> internalItems)
+        {
+            return internalItems.GroupBy(c => new
+                {
+                    c.Date,
+                    c.Project,
+                    c.Task,
+                    c.Comment,
+                    c.Activity,
+                    c.Ticket
+                })
+                .Select(gcs => new InternalItem()
+                {
+                    Date = gcs.Key.Date,
+                    Project = gcs.Key.Project,
+                    Activity = gcs.Key.Activity,
+                    Task = gcs.Key.Task,
+                    Comment = gcs.Key.Comment,
+                    Ticket = gcs.Key.Ticket,
+                    Time = gcs.Sum(g => double.Parse(g.Time)).ToString()
+                }).ToList();
         }
 
 

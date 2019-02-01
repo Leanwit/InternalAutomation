@@ -16,3 +16,7 @@ internal\.txt
 TimeEntries\.txt
 
 debug\.log
+
+\.idea/\.idea\.InternalAutomation/\.idea/
+
+\.idea/\.idea\.InternalAutomation/riderModule\.iml
