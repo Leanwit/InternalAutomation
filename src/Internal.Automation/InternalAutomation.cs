@@ -21,6 +21,7 @@ namespace Automation
                 return;
             }
 
+            bool isActivityUse = internalItems.Exists(x => x.Activity != null);
 
             using (var driver = new ChromeDriver(Path.GetDirectoryName(this.ChromeDriverFolder), this.ChromeOptions))
             {
@@ -98,9 +99,18 @@ namespace Automation
                 {
                     if (entry.Project == null && histories.Exists(h => h.Comment.Equals(entry.Comment)))
                     {
-                        history = histories.FindLast(h => h.Comment.Equals(entry.Comment));
 
-                        if (listProject.Any(x => x.Project.Equals(history.Project)))
+                        if (isActivityUse)
+                        {
+                            history = histories.FindLast(h => h.Comment.Equals(entry.Comment) && h.Activity == entry.Activity);
+                        }
+                        else
+                        {
+                            history = histories.FindLast(h => h.Comment.Equals(entry.Comment));
+                        }
+                        
+                        
+                        if (history != null && listProject.Any(x => x.Project.Equals(history.Project)))
                         {
                             entry.Project = history.Project;
                             entry.Task = history.Task;
