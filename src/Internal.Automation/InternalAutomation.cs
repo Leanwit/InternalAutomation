@@ -215,7 +215,8 @@ namespace Automation
 
         private List<InternalItem> GroupByPerDay(List<InternalItem> internalItems)
         {
-            return internalItems.GroupBy(c => new
+            internalItems.ForEach(x => x.Time.Replace(".", ","));
+            List<InternalItem> items = internalItems.GroupBy(c => new
                 {
                     c.Date,
                     c.Project,
@@ -234,6 +235,8 @@ namespace Automation
                     Ticket = gcs.Key.Ticket,
                     Time = gcs.Sum(g => double.Parse(g.Time)).ToString()
                 }).ToList();
+            internalItems.ForEach(x => x.Time.Replace(",", "."));
+            return internalItems;
         }
 
 
