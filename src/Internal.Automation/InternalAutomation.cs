@@ -98,12 +98,8 @@ namespace Automation
                     if (entry.Project == null && histories.Exists(h => h.Comment.Equals(entry.Comment)))
                     {
                         history = histories.FindLast(h => h.Comment.Equals(entry.Comment));
-                        Console.WriteLine($"Exist and comment '{entry.Comment}'");
-                        Console.WriteLine(
-                            $"{history.Project} - {history.Task} - {history.Activity} - {history.Comment}");
-                        Console.WriteLine($"0-No | 1-Yes");
-                        string option = Console.ReadLine();
-                        if (option.Equals("1"))
+
+                        if (listProject.Any(x => x.Project.Equals(history.Project)))
                         {
                             entry.Project = history.Project;
                             entry.Task = history.Task;
@@ -233,6 +229,8 @@ namespace Automation
                 catch (System.Exception)
                 {
                     Console.WriteLine("Error option");
+                    option = Console.ReadLine();
+
                     continue;
                 }
 
