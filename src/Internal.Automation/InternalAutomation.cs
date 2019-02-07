@@ -233,10 +233,10 @@ namespace Automation
                     Task = gcs.Key.Task,
                     Comment = gcs.Key.Comment,
                     Ticket = gcs.Key.Ticket,
-                    Time = gcs.Sum(g => double.Parse(g.Time)).ToString()
+                    Time = gcs.Sum(g => double.Parse(g.Time)).ToString(),
                 }).ToList();
-            internalItems.ForEach(x => x.Time.Replace(",", "."));
-            return internalItems;
+            items.ForEach(x => x.Time.Replace(",", "."));
+            return items;
         }
 
 
