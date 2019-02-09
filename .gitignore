@@ -20,3 +20,7 @@ debug\.log
 \.idea/\.idea\.InternalAutomation/\.idea/
 
 \.idea/\.idea\.InternalAutomation/riderModule\.iml
+
+appsettings\.json
+
+appsettings-development\.json
