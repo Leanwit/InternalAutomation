@@ -14,5 +14,17 @@ namespace Model
 
         public string Ticket { get; set; }
 
+        public bool IsSkip
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(this.Project))
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        }
     }
 }
