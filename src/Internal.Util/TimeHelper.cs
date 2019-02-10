@@ -74,6 +74,11 @@ namespace Util
                 hour += 1;
             }
 
+            if (hour == 0 && minute == 0)
+            {
+                minute = 0.25;
+            }
+            
             return hour + minute;
         }
     }

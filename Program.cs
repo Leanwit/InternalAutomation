@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -43,7 +43,7 @@ public class Program
         }
 
         new InternalAutomation().Init(GetInternalConfig("Email"), GetInternalConfig("Password"), intenalItems,
-            GetInternalConfig("Url"));
+            GetInternalConfig("Url"), bool.Parse(methodTimeEntry["IsEnabledLoadTicketField"]));
     }
 
     private static string GetInternalConfig(string key)
