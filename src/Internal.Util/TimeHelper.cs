@@ -51,8 +51,12 @@ namespace Util
         {
             double hour = Math.Truncate(time);
             double extractMinute = time - hour;
-            double minute = 0.15;
-            if (extractMinute <= 0.25 || (extractMinute > 0.25 && extractMinute <= 0.30))
+            double minute = 0;
+            if (extractMinute <= 0.05)
+            {
+                minute = 0;
+            }
+            else if (extractMinute <= 0.25 || (extractMinute > 0.25 && extractMinute <= 0.30))
             {
                 minute = 0.25;
             }
@@ -70,6 +74,11 @@ namespace Util
                 hour += 1;
             }
 
+            if (hour == 0 && minute == 0)
+            {
+                minute = 0.25;
+            }
+            
             return hour + minute;
         }
     }
