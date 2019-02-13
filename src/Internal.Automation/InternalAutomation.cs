@@ -14,7 +14,7 @@ namespace Automation
 {
     public class InternalAutomation : Base
     {
-        public void Init(string Email, string Password, List<InternalItem> internalItems, string url)
+        public void Init(string Email, string Password, List<InternalItem> internalItems, string url, bool isEnableTicket)
         {
             if (internalItems == null && internalItems.Count == 0)
             {
@@ -121,6 +121,13 @@ namespace Automation
                     if (entry.Project == null)
                     {
                         var webProjectObject = GetProjectValue(listProject, entry);
+
+                        //If select skip option
+                        if (string.IsNullOrEmpty(webProjectObject.Project))
+                        {
+                            continue;
+                        }
+                        
                         entry.Project = webProjectObject.Project;
                         entry.Task = webProjectObject.Task;
                         Console.Clear();
@@ -159,6 +166,9 @@ namespace Automation
                     }
                 }
 
+                //Remove all skip entries
+                internalItems.RemoveAll(x => x.IsSkip);
+                
                 internalItems = GroupByPerDay(internalItems);
 
                 foreach (InternalItem entry in internalItems)
@@ -185,7 +195,7 @@ namespace Automation
                         selenium.FindElement(By.XPath("//input[@name='Amount']"), 50).SendKeys(entry.Time);
                         selenium.FindElement(By.XPath("//input[@name='Description']"), 50).SendKeys(entry.Comment);
 
-                        if (!string.IsNullOrWhiteSpace(entry.Ticket))
+                        if (!string.IsNullOrWhiteSpace(entry.Ticket) && isEnableTicket)
                         {
                             selenium.FindElement(
                                 By.XPath("//span[@class='select2-selection select2-selection--single']"), 50).Click();
@@ -244,7 +254,9 @@ namespace Automation
         {
             WebProject projectValue;
             Console.WriteLine($"Complete Project for '{entry.Comment}'");
-            int count = 0;
+            Console.WriteLine($"0. Skip Project");
+
+            int count = 1;
             Dictionary<int, WebProject> options = new Dictionary<int, WebProject>();
             foreach (var project in newProject)
             {
@@ -259,6 +271,12 @@ namespace Automation
                 try
                 {
                     int value = Int16.Parse(option);
+                    
+                    //Skip option
+                    if (value == 0)
+                    {
+                        return new WebProject();
+                    }
                     options.TryGetValue(value, out projectValue);
                     if (projectValue != null)
                     {
