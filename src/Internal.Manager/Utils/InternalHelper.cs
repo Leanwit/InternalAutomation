@@ -1,15 +1,14 @@
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.Text.RegularExpressions;
-using Model;
-
 namespace Manager.Util
 {
+    using Model;
+    using System;
+    using System.Text.RegularExpressions;
+
     public static class InternalHelper
     {
         public static string GetTicketByDescription(string text)
         {
-            Regex regex = new Regex("((ODM|PS|BDE|WOMM|NLS|AF|FVW|AWPOC|UX))-([0-9]*)");
+            Regex regex = new Regex("[A-Z]+-[0-9]+");
             var match = regex.Match(text);
             return match.Value;
         }
@@ -52,7 +51,7 @@ namespace Manager.Util
         {
             string aux = string.Empty;
 
-            if (entryComment.ToLower().Contains("code review") || entryComment.ToLower().Contains("review"))
+            if (entryComment.ToLower().Contains("code review"))
             {
                 return Activity.Review;
             }
