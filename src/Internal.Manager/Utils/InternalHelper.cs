@@ -8,7 +8,7 @@ namespace Manager.Util
     {
         public static string GetTicketByDescription(string text)
         {
-            Regex regex = new Regex("[A-Z]+-[0-9]+");
+            Regex regex = new Regex("[A-Z0-9]+-[0-9]+");
             var match = regex.Match(text);
             return match.Value;
         }
