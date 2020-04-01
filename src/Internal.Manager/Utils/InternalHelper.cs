@@ -60,8 +60,49 @@ namespace Manager.Util
             {
                 return Activity.Execution;
             }
+            
+            if (entryComment.ToLower().Contains("management"))
+            {
+                return Activity.Management;
+            }
+            
+            if (entryComment.ToLower().Contains(" tl "))
+            {
+                return Activity.TechLeading;
+            }
 
+            if (entryComment.ToLower().Contains("testing"))
+            {
+                return Activity.Testing;
+            }
+            
+            if (entryComment.ToLower().Contains("daily"))
+            {
+                return Activity.Execution;
+            }
+            
             return aux;
+        }
+        
+        public static InternalItem GetPredictedProjectValue(InternalItem entry)
+        {
+            string entryComment = entry.Comment.ToLower();
+
+            if (entryComment.Contains("code review") && entryComment.Contains("dev-"))
+            {
+                entry.Project = "Development";
+                entry.Task = "GDD";
+                return entry;
+            }
+            
+            if (entryComment.Contains("Development Management"))
+            {
+                entry.Project = "Development";
+                entry.Task = "Development";
+                return entry;
+            }
+
+            return entry;
         }
     }
 

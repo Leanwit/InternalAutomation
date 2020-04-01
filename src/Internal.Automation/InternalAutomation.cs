@@ -35,7 +35,7 @@ namespace Automation
                 Thread.Sleep(4000);
 
                 IWebElement Element =
-                    selenium.FindElement(By.XPath("//table[@class='table table-bordered table-hover']"), 100);
+                    selenium.FindElement(By.XPath("//table[@class='table table-hover']"), 100);
                 IWebElement Table = Element.FindElement(By.TagName("tbody"));
                 IJavaScriptExecutor js = driver as IJavaScriptExecutor;
 
@@ -62,8 +62,8 @@ namespace Automation
 
                         if (elementCount == 7)
                         {
-                            newProject.Button = td.FindElements(By.TagName("a"))[1];
-                            newProject.IdElement = td.FindElements(By.TagName("a"))[1].GetAttribute("data-id");
+                            newProject.Button = td.FindElements(By.TagName("button"))[1];
+                            newProject.IdElement = td.FindElements(By.TagName("button"))[1].GetAttribute("data-id");
                         }
 
                         elementCount++;
@@ -116,6 +116,13 @@ namespace Automation
                             entry.Task = history.Task;
                             entry.Activity = history.Activity;
                         }
+                    }
+                    
+                    if (entry.Project == null)
+                    {
+                        InternalItem aux = InternalHelper.GetPredictedProjectValue(entry);
+                        entry.Project = aux.Project;
+                        entry.Task = aux.Task;
                     }
 
                     if (entry.Project == null)
@@ -184,7 +191,7 @@ namespace Automation
                         //string timeDaily = (double.Parse(Time.GetInternalTime(entry.Time).Replace(".", ",")) / 2).ToString().Replace(",", ".");
                         string timeDaily = TimeHelper.GetInternalTime(entry.Time);
 
-                        selenium.FindElement(By.XPath("//a[@data-id='" + test.IdElement + "']"), 50).Click();
+                        selenium.FindElement(By.XPath("//button[@data-id='" + test.IdElement + "']"), 50).Click();
                         Thread.Sleep(5000);
                         selenium.FindElement(By.XPath("//input[@name='WorkedHourDate']"), 50).Clear();
                         selenium.FindElement(By.XPath("//input[@name='WorkedHourDate']"), 50)
@@ -203,7 +210,15 @@ namespace Automation
                                 selenium.FindElement(By.XPath("//input[@class='select2-search__field']"), 50);
                             TicketSelect.SendKeys(entry.Ticket);
                             Thread.Sleep(10000);
-                            TicketSelect.SendKeys(Keys.Enter);
+                            try
+                            {
+                                TicketSelect.SendKeys(Keys.Enter);
+                            }
+                            catch (Exception e)
+                            {
+                                Thread.Sleep(10000);
+                                TicketSelect.SendKeys(Keys.Enter);
+                            }
                         }
 
                         IWebElement ActivitySelect =

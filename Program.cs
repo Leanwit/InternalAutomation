@@ -1,18 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
-using System.Threading;
-using Manager;
-using Model;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using Util;
 using Automation;
-using System.Linq;
+using Manager;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Configuration.FileExtensions;
-using Microsoft.Extensions.Configuration.Json;
+using Model;
 
 public class Program
 {
@@ -33,7 +25,7 @@ public class Program
         if (methodTimeEntry["Timecamp"].Equals("true"))
         {
             intenalItems =
-                new TimecampManager("2019-01-18", "2019-01-18", GetTimecampConfig("Token")).GetInfoAsync().Result;
+                new TimecampManager("2020-03-03", "2020-03-09", GetTimecampConfig("Token")).GetInfoAsync().Result;
         }
 
         if (methodTimeEntry["Text"].Equals("true"))
