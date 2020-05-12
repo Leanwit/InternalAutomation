@@ -209,14 +209,14 @@ namespace Automation
                             IWebElement TicketSelect =
                                 selenium.FindElement(By.XPath("//input[@class='select2-search__field']"), 50);
                             TicketSelect.SendKeys(entry.Ticket);
-                            Thread.Sleep(10000);
+                            Thread.Sleep(15000);
                             try
                             {
                                 TicketSelect.SendKeys(Keys.Enter);
                             }
                             catch (Exception e)
                             {
-                                Thread.Sleep(10000);
+                                Thread.Sleep(15000);
                                 TicketSelect.SendKeys(Keys.Enter);
                             }
                         }

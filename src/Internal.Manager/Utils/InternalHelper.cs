@@ -24,7 +24,8 @@ namespace Manager.Util
             Console.WriteLine("5. Rework");
             Console.WriteLine("6. Tech Leading");
             Console.WriteLine("7. Testing");
-            Console.WriteLine("8. Other");
+            Console.WriteLine("8. Meeting");
+            Console.WriteLine("9. Other");
 
             string option = Console.ReadLine();
 
@@ -39,7 +40,8 @@ namespace Manager.Util
                     case "5": return Activity.Rework;
                     case "6": return Activity.TechLeading;
                     case "7": return Activity.Testing;
-                    case "8": return Activity.Other;
+                    case "8": return Activity.Meeting;
+                    case "0": return Activity.Other;
                     default:
                         option = Console.ReadLine();
                         break;
@@ -49,41 +51,18 @@ namespace Manager.Util
 
         public static string GetPredictedActivityValue(string entryComment)
         {
-            string aux = string.Empty;
+            entryComment = entryComment.ToLower();
+            if (entryComment.Contains("code review")) return Activity.Review;
+            if (entryComment.Contains("support")) return Activity.Execution;
+            if (entryComment.Contains("management")) return Activity.Management;
+            if (entryComment.Contains(" tl ")) return Activity.TechLeading;
+            if (entryComment.Contains("testing")) return Activity.Testing;
+            if (entryComment.Contains("daily") || entryComment.Contains("analysis")) return Activity.Analysis;
+            if (entryComment.Contains("meeting")) return Activity.Meeting;
 
-            if (entryComment.ToLower().Contains("code review"))
-            {
-                return Activity.Review;
-            }
-
-            if (entryComment.ToLower().Contains("support"))
-            {
-                return Activity.Execution;
-            }
-            
-            if (entryComment.ToLower().Contains("management"))
-            {
-                return Activity.Management;
-            }
-            
-            if (entryComment.ToLower().Contains(" tl "))
-            {
-                return Activity.TechLeading;
-            }
-
-            if (entryComment.ToLower().Contains("testing"))
-            {
-                return Activity.Testing;
-            }
-            
-            if (entryComment.ToLower().Contains("daily"))
-            {
-                return Activity.Execution;
-            }
-            
-            return aux;
+            return string.Empty;
         }
-        
+
         public static InternalItem GetPredictedProjectValue(InternalItem entry)
         {
             string entryComment = entry.Comment.ToLower();
@@ -94,7 +73,7 @@ namespace Manager.Util
                 entry.Task = "GDD";
                 return entry;
             }
-            
+
             if (entryComment.Contains("Development Management"))
             {
                 entry.Project = "Development";
@@ -115,6 +94,7 @@ namespace Manager.Util
         public static string Rework = "Rework";
         public static string TechLeading = "Tech Leading";
         public static string Testing = "Testing";
+        public static string Meeting = "Meeting";
         public static string Other = "Other";
     }
 }
